@@ -9,8 +9,26 @@
  */
 class Html  {
 	
-	function url($url, $linkText, $attributes=array()) {
+	function url($url="/", $linkText, $attributes=array(), $linkType="i") {
+		
+		$domain = httpOrHttps() . rtrim($_SERVER['HTTP_HOST'], '/');
+		
+		$htmlAttributes='';
+		
+		foreach ($attributes as $attribute => $value) {
+			$htmlAttributes .= $attribute . '="' . $value . '" ';
+		}
+		
+		$link = '<a href="' . $domain . $url . '"'.$htmlAttributes. '>' . $text . '</a>';
 		
 		return $link;
+	}
+	
+	function httpOrHttps() {
+		if (isset($_SERVER['HTTPS']) && $_SEREVER['HTTPS'] != 'off') {
+			return 'https://';
+		} else {
+			return 'http://';
+		}
 	}
 }
